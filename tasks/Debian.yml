@@ -1,0 +1,50 @@
+---
+- name: Install Global packages (Debian)
+  apt:
+    name={{ item }}
+    state=present
+  with_items:
+    - sysstat
+    - netcat
+    - strace
+    - tcpdump
+    - fping
+    - nmap
+    - lsb-base
+    - lsb-release
+    - gnutls-bin
+    - vim-common
+    - rsync
+    - screen
+
+- name: Setup Sysstat/Sar (Debian)
+  template:
+    src: sysstat.default-debian.j2
+    dest: /etc/default/sysstat
+    mode: 0644
+    owner: root
+    group: root
+
+- name: Configure Sysstat/Sar (Debian)
+  template:
+    src: sysstat.conf.j2
+    dest: /etc/sysstat/sysstat
+    mode: 0644
+    owner: root
+    group: root
+
+- name: Configure Sysstat/Sar cronjob (Debian)
+  template:
+    src: sysstat.crond-debian.j2
+    dest: /etc/cron.d/sysstat
+    mode: 0644
+    owner: root
+    group: root
+
+- name: Drop global vimrc file in place
+  template:
+    src: vimrc.j2
+    dest: /etc/vim/vimrc
+    mode: 0644
+    owner: root
+    group: root
