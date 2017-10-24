@@ -1,0 +1,14 @@
+---
+- name: Include RedHat based global setup instructions
+  include: RedHat.yml
+  static: false
+  when: ansible_os_family == "RedHat"
+
+- name: Include Debian based global setup instructions
+  include: Debian.yml
+  static: false
+  when: ansible_os_family == "Debian"
+
+- name: Set timezone to CST
+  timezone:
+    name: US/Central

@@ -1,0 +1,58 @@
+---
+- name: Install Global packages (RedHat)
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - sysstat
+    - strace
+    - tcpdump
+    - nmap
+    - bind-utils
+    - mlocate
+    - redhat-lsb-core
+    - gnutls
+    - vim-common
+    - vim-enhanced
+    - rsync
+    - screen
+    - libselinux-python
+    - libsemanage-python
+    - tmux
+
+- name: Install Netcat package (RedHat 6)
+  yum:
+    name: nc
+    state: present
+  when: ansible_distribution_major_version == "6"
+
+- name: Install Nmap-Netcat package (RedHat 7)
+  yum:
+    name: nmap-ncat
+    state: present
+  when: ansible_distribution_major_version == "7"
+
+- name: Configure Sysstat/Sar (RedHat)
+  template:
+    src: sysstat.conf.j2
+    dest: /etc/sysconfig/sysstat
+    mode: 0644
+    owner: root
+    group: root
+
+- name: Configure Sysstat/Sar cronjob (RedHat)
+  become: yes
+  template:
+    src: sysstat.crond-redhat.j2
+    dest: /etc/cron.d/sysstat
+    mode: 0644
+    owner: root
+    group: root
+
+- name: Drop global vimrc file in place
+  template:
+    src: vimrc.j2
+    dest: /etc/vimrc
+    mode: 0644
+    owner: root
+    group: root
