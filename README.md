@@ -1,4 +1,4 @@
-Role Name
+Global Base
 =========
 Installs Global packages, and sets up/configures Sar/Sysstat.
 
@@ -14,10 +14,16 @@ Dependencies
 Example Playbook
 ----------------
 
+- hosts: servers
+  roles:
+     - { role: global_base }
+
 License
 -------
 
-BSD
+MIT
 
 Author Information
 ------------------
+
+The Development Range Engineering, Architecture, and Modernization (DREAM) Team.
