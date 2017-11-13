@@ -1,11 +1,11 @@
 ---
 - name: Include RedHat based global setup instructions
-  include: RedHat.yml
+  import_tasks: RedHat.yml
   static: false
   when: ansible_os_family == "RedHat"
 
 - name: Include Debian based global setup instructions
-  include: Debian.yml
+  import_tasks: Debian.yml
   static: false
   when: ansible_os_family == "Debian"
 
